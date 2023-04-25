@@ -4105,10 +4105,16 @@ input, select, textarea {
 myButton
 {
     padding: 30px;
-    color: white;
     text-align:center;
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 1.5em;
+    right: 2em;
+}
 
+logo
+{
+    padding: 0em;
+    position: absolute;
+    top: 0.5em;
+    left: 1.5em;
 }
