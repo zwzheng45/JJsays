@@ -51,14 +51,15 @@ void MainWindow::on_vitsconfirm_2_clicked()
 
     QString qssavepath=ui->savepathline->text();
     QString qstext=ui->inputpath->text();
-    QString qspath=ui->moegoepath_2->text();
+//    QString qspath=ui->moegoepath_2->text();
+    QString qspath="so-vits-svc4.0_copy2";
     QString qspitch=ui->spinBox_pitch->text();
     QString qsnoise=ui->doubleSpinBox_noise->text();
-    if(qspath.isEmpty())
-    {
-        QMessageBox::warning(this, tr("warning"), tr("没有inference_main.py路径"));
-        return;
-    }
+//    if(qspath.isEmpty())
+//    {
+//        QMessageBox::warning(this, tr("warning"), tr("没有inference_main.py路径"));
+//        return;
+//    }
     if(qstext.isEmpty())
     {
         QMessageBox::warning(this, tr("warning"), tr("无待转换音频"));
@@ -99,8 +100,8 @@ void MainWindow::on_vitsconfirm_2_clicked()
         return;
     }
     QTextStream out(&file);
-    out <<"#!/bin/bash\nconda init\nconda activate so-vits-4\n"<< command;
-    qDebug()<<"write student.json sucessfully: "<<command;
+    out <<"#!/bin/bash\ncd so-vits-svc4.0_copy2\npip3.10 install virtualenv\nvirtualenv venv\nsource venv/bin/activate\npip install -r requirements.txt\n"<< command;
+    qDebug()<<"write command sucessfully: "<<command;
     file.close();
     //qDebug("%s",command);
     //popen("virtualenv","r");
@@ -117,6 +118,7 @@ void MainWindow::on_vitsconfirm_2_clicked()
     system("chmod 777 inference.sh");
     QProcess* executeProcess = new QProcess();
     executeProcess->start("/bin/bash", QStringList()<<"inference.sh");
+    qDebug("Start running batch");
     while(executeProcess->canReadLine())
     {
         ui->output->appendPlainText(executeProcess->readLine());
